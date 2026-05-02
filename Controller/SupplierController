@@ -1,0 +1,28 @@
+using inventory.Data;
+using inventory.Models;
+using Microsoft.AspNetCore.Mvc;
+
+public class SupplierController : Controller
+{
+    private readonly ApplicationDbContext _context;
+
+    public SupplierController(ApplicationDbContext context)
+    {
+        _context = context;
+    }
+
+    public IActionResult Index()
+    {
+        return View(_context.Suppliers.ToList());
+    }
+
+    public IActionResult Create() => View();
+
+    [HttpPost]
+    public IActionResult Create(Supplier supplier)
+    {
+        _context.Suppliers.Add(supplier);
+        _context.SaveChanges();
+        return RedirectToAction("Index");
+    }
+}
