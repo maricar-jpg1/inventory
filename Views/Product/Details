@@ -1,0 +1,14 @@
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model inventory.Models.Product
+
+<h2>Product Details</h2>
+
+<p><strong>Name:</strong> @Model.Name</p>
+<p><strong>Quantity:</strong> @Model.Quantity</p>
+
+<a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+<a asp-action="Index">Back</a>
