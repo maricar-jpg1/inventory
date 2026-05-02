@@ -1,0 +1,51 @@
+using Microsoft.AspNetCore.Mvc;
+using inventory.Data;
+using inventory.Models;
+
+public class AccountController : Controller
+{
+    private readonly ApplicationDbContext _context;
+
+    public AccountController(ApplicationDbContext context)
+    {
+        _context = context;
+    }
+
+    // REGISTER
+    public IActionResult Register() => View();
+
+    [HttpPost]
+    public IActionResult Register(User user, string password)
+    {
+
+        _context.Users.Add(user);
+        _context.SaveChanges();
+
+        return RedirectToAction("Login");
+    }
+
+    // LOGIN
+    public IActionResult Login() => View();
+
+    [HttpPost]
+    public IActionResult Login(string email, string password)
+    {
+        var user = _context.Users.FirstOrDefault(u => u.Email == email);
+
+      
+        if (user == null)
+        {
+            ViewBag.Error = "User not found";
+            return View();
+        }
+
+        HttpContext.Session.SetString("User", user.Email);
+
+        return RedirectToAction("Index", "Product");
+    }
+    public IActionResult Logout()
+    {
+        HttpContext.Session.Clear();
+        return RedirectToAction("Login");
+    }
+}
