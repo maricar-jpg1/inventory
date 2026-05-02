@@ -1,0 +1,10 @@
+namespace inventory.Models
+{
+    public class Supplier
+    {
+        public int Id { get; set; }
+        required
+        public string Name{ get; set; }
+        public required string Contact { get; set; }
+    }
+}
